@@ -1,0 +1,38 @@
+<HTML>
+<BODY>
+<h1>Results of Single-Processor Colt Matrix Benchmark</h1>
+using the <a href="../package-summary.html">matrix package</a>.
+<p>
+Below the results, from left to right: 
+<a href="perfSun122classicSun450.txt">SunJDK1.2.2, Classic VM, Solaris</a> ...
+<a href="perfSun122classicNT.txt">SunJDK1.2.2, Classic VM, NT</a> ...
+<a href="perfIBM118.txt">IBMJDK1.1.8, NT</a> ...
+<a href="perfBlackdown12pre2.txt">BlackdownJDK1.2PreV2, Classic VM, native threads, sunwjit, Linux</a>.
+</p>
+<p>Each operation is accurately timed varying the following parameters </p>
+<ul>
+  <li><i>Implementation type</i> - <tt>DenseDoubleMatrix2D, SparseDoubleMatrix2D</tt></li>
+  <li><i>Density</i> - the fraction of cells in non-zero state (randomly assigned)</li>
+  <li><i>Size</i> - all matrices are square with the given number of rows and 
+    columns</li>
+  <li><i>Computer Architecture, Operating System and Virtual Machine</i></li>
+</ul>
+<p></p>
+<ul>
+  <li><i>NT</i> is running NT 4.0 on a 1 x Pentium Pro@200 MHz, 160 MB (pcitpdp13.cern.ch)
+  <li><i>Solaris</i> is running Solaris 2.6 (aka SunOS 5.6) on a Sun 450, 2 x Ultrasparc-II@400 MHz (1 CPU used), 256 MB (shd70.cern.ch)
+  <li><i>Linux</i> is running Red Hat Linux 5.1, Kernel 2.0.35 on a 2 x PentiumII@350 MHz (1 CPU used), 256 MB (lxp01.cern.ch)
+</ul>
+<p>Measurements given in <i>Mops/sec</i> (10^6 ops/sec) and <i>Mflops/sec</i> 
+  (10^6 flops/sec). <tt>A[i,j]=B[k,l]</tt>, for example, counts as <tt>1</tt> 
+  op. <tt>sum += A[i,j]*B[k,l]</tt> counts as <tt>2</tt> flops. For sparse implementations 
+  Mops and Mflops are expressed in relation to the dense base line implementation: 
+  If an operation on a dense matrix executes at 10 Mflops/sec but takes 2 times 
+  longer to complete on a sparse matrix, the sparse matrix is said to have a performance 
+  of 10/2=5 Mflops.<br>
+  All machines are empty.<br>
+  No explicit invocation of garbage collection within and between runs (there is not much to collect).<br>
+  Each operation is repeated for at least 2 seconds (see command line).</p>
+<p>Command line: <tt>java [-classic] -ms30m -mx60m cern.colt.benchmark.BenchmarkMatrix 2</tt></p>
+</BODY>
+</HTML>

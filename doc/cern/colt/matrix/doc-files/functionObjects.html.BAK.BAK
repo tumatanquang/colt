@@ -1,0 +1,284 @@
+<HTML><title>Function Objects</title>
+<BODY>
+<h1>Function Objects</h1>
+<p>Here are some examples demonstrating how function objects can be used </p>
+<ul>
+  <li>to transform a matrix A into another matrix B which is a function of the 
+    original matrix A (and optionally yet another matrix C)</li>
+  <li>to aggregate cell values or a function of them</li>
+  <li>to generate selection views for cells satisfying a given condition</li>
+  <li>to sort matrix rows or columns into a user specified order</li>
+  <li>You will most likely use them to do many more powerful things</li>
+</ul>
+<p>The following examples will often use prefabricated function objects from the 
+  library <a href="../../../jet/math/Functions.html">cern.jet.math.Functions</a>  
+  But you need not yet know all about that library, only that it exists. Let's 
+  stay focused and browse through the examples.</p>
+<h2>Example 1: Transformation </h2>
+<h4><i>Transformation over one matrix </i></h4>
+<p>To prepare with, let's construct a 1-d matrix: 
+<pre>double[] v1 = {0, 1, 2, 3}; <br>DoubleMatrix1D x = new DenseDoubleMatrix1D(v1); </pre>
+<p>Using a <tt>mult</tt> function object, we multiply the matrix with a scalar 
+  <tt>c</tt> 
+<pre>// x[i] = x[i] * c<br>double c = 2;<br>m1.assign(cern.jet.math.Functions.mult(c));
+System.out.println(m1);
+--&gt; 0 2 4 6</pre>
+<p>It would be equivalent but more clumsy to write 
+<pre>m1.assign( 
+   new DoubleFunction() {
+      public final double apply(double a) { return a*c); } 
+   }
+); 
+</pre>
+<p>Similarly, the <tt>sin</tt> function object is used to transform the matrix 
+  to hold in each cell the sine of the former corresponding cell value: 
+<pre>// set each cell to its sine<br>System.out.println(m1.assign(cern.jet.math.Functions.sin));
+
+// set each cell to random state uniform in (0,1)<br>System.out.println(m1.assign(cern.jet.math.Functions.random()));<br>--&gt; 0.002489 0.793068 0.620307 0.35774 
+<br>// set each cell to random state uniform in (-0.5, 0.5)<br>int seed = 12345;<br>System.out.println(m1.assign(new cern.jet.random.Uniform(-0.5, 0.5, seed)));<br>--&gt; 0.31733 0.499061 0.010354 -0.368467 
+
+// set each cell to random state from Poisson distribution with mean=2<br>System.out.println(m1.assign(new cern.jet.random.Poisson(2, cern.jet.random.Poisson.makeDefaultGenerator()))); 
+--&gt; 9 6 2 2
+</pre>
+<h4><i>Transformation over two matrices</i></h4>
+<p> 
+<p>To prepare with, let's construct two 1-d matrices: 
+<pre>double[] v1 = {0, 1, 2, 3}; <br>double[] v2 = {0, 2, 4, 6};
+DoubleMatrix1D x = new DenseDoubleMatrix1D(v1);
+DoubleMatrix1D y = new DenseDoubleMatrix1D(v2);
+</pre>
+<p><b><tt>x = x<sup>y</sup> &lt;==&gt; x[i] = x[i]<sup>y[i]</sup></tt></b> <b><tt> 
+  for all i</tt></b> 
+<p>A prefabricated <tt>pow</tt> function object is used to compute the power transformation:</p>
+<pre>// x[i] = Math.pow(x[i], y[i])
+System.out.println(x.assign(y, cern.jet.math.Functions.pow));
+--> 1 1 16 729
+</pre>
+<p>A prefabricated <tt>mult</tt> function does something similar:</p>
+<pre>// x[i] = x[i] * y[i]<br>System.out.println(x.assign(y, cern.jet.math.Functions.mult));
+--> 0 2 8 18
+</pre>
+<p>The naming shortcut (alias) saves some keystrokes:</p>
+<pre>cern.jet.math.Functions F = cern.jet.math.Functions.functions;</pre>
+<p>Chaining function objects yields more complex functions:</p>
+<pre>// x[i] = x[i] * y[i] * 3<br>System.out.println(x.assign(y, F.chain(F.mult,F.mult(3))));
+--> 0 6 24 54
+</pre>
+<p></p>
+<p>More complex transformation functions need to be written by hand:</p>
+<pre>m1.assign(m2,
+   new DoubleDoubleFunction() {
+      public double apply(double a, double b) { return Math.PI*Math.log(a-5)*Math.pow(a,b); }
+   }
+);
+</pre>
+<p> If we want to generate a third matrix holding the result of the power transformation, 
+  and leave both source matrices unaffected, we make a copy first and then apply 
+  the transformation on the copy: 
+<pre>// z[i] = Math.pow(x[i],y[i])<br>DoubleMatrix2D z = x.copy().assign(y, F.pow);
+System.out.println(z);</pre>
+<p>
+<h2>Example 2: Aggregation</h2>
+<p><i>Aggregation</i> is a generalized form of summation or integration. Aggregation 
+  functions visit all cells of a matrix and derive a single number as &quot;summary 
+  information&quot;. Number of elements, mean, maximum, minimum, variance, root-mean-square 
+  are classic aggregation functions, but there are many more. Floods of data are 
+  too difficult to understand - a single number sells better to management. More 
+  seriously, the scientific process takes observations and tries to find patterns, 
+  the essentials of knowledge, which are more compact and easier to internalize 
+  than the observations itself. The most compact representation of knowledge is, 
+  of course, a single number. 
+<p>We will use the prefabricated <tt>plus</tt> and <tt>square</tt> function objects 
+  to compute the sum of squares of a 1-d matrix, but first, let's get prepared. 
+<pre>double[] v1 = {0, 1, 2, 3}; <br>DoubleMatrix1D matrix = new DenseDoubleMatrix1D(v1);
+
+// the naming shortcut (alias) saves some keystrokes:
+cern.jet.math.Functions F = cern.jet.math.Functions.functions;
+</pre>
+<h4><i>Aggregation over one matrix </i></h4>
+<pre>
+// Sum( x[i]*x[i] ) 
+System.out.println(matrix.aggregate(F.plus,F.square));
+// --> 14
+
+// Sum( x[i]*x[i]*x[i] ) 
+System.out.println(matrix.aggregate(F.plus,F.pow(3)));
+// --> 36
+
+// Sum( x[i] ) 
+System.out.println(matrix.aggregate(F.plus,F.identity));
+// or the specialized version
+System.out.println(matrix.zSum());
+// --> 6
+</pre>
+<pre>// Min( x[i] ) 
+System.out.println(matrix.aggregate(F.min,F.identity));
+// --> 0
+
+// Max( Sqrt(x[i]) / 2 ) 
+System.out.println(matrix.aggregate(F.max,F.chain(F.div(2),F.sqrt)));
+// --> 0.8660254037844386
+
+// Number of all cells with 0 <= value <= 2
+System.out.println(matrix.aggregate(F.plus,F.between(0,2)));
+// --> 3
+
+// Number of all cells with 0.8 <= Log2(value) <= 1.2
+System.out.println(matrix.aggregate(F.plus,F.chain(F.between(0.8,1.2),F.log2)));
+// --> 1
+
+// Product( x[i] )
+System.out.println(matrix.aggregate(F.mult,F.identity));
+// --> 0
+
+// Product( x[i] ) of all x[i] > limit
+final double limit = 1;
+DoubleFunction f = new DoubleFunction() {
+	public final double apply(double a) { return a>limit ? a : 1; }
+};
+System.out.println(matrix.aggregate(F.mult,f));
+// --> 6
+
+// RMS (Root-Mean-Square) is a measure of the average "size" of the elements of a data sequence.
+double rms = Math.sqrt(matrix.aggregate(F.plus,F.square) / matrix.size());</pre>
+<h4><i>Aggregation over two matrices</i> </h4>
+<pre>
+DoubleMatrix1D x = matrix.copy();
+DoubleMatrix1D y = matrix.copy();
+// x is 0 1 2 3 
+// y is 0 1 2 3 
+
+// Sum( x[i]*y[i] )
+System.out.println(x.aggregate(y, F.plus, F.mult));
+// --> 14
+
+// Sum( (x[i]+y[i])^2 )
+System.out.println(x.aggregate(y, F.plus, F.chain(F.square,F.plus)));
+// --> 56
+
+
+// Sum(Math.PI * Math.log(y[i] / x[i]))<br>x.aggregate(y, F.plus, F.chain(F.mult(Math.PI),F.chain(F.log,F.swapArgs(F.div))));
+
+// equivalent, but perhaps less error prone and more readable: 
+x.aggregate(y, F.plus,
+   new DoubleDoubleFunction() {
+      public double apply(double a, double b) { return Math.PI*Math.log(b/a); }
+   }
+);
+</pre>
+Try the examples on 2-d or 3-d matrices. They work without changes (except, of 
+course, that construction of the source matrix need to be modified). 
+<pre></pre>
+<h2>Example 3: Selection views based on conditions </h2>
+<p>Using condition functions (predicates), we can filter away uninteresting data 
+  and keep only interesting data. In physics codes, this process is often called 
+  <i>cutting on a predicate</i>. 
+<h4><i>Conditions on 1-d matrices (vectors)</i> </h4>
+<pre>
+// the naming shortcut (alias) saves some keystrokes:
+cern.jet.math.Functions F = cern.jet.math.Functions.functions;
+
+double[] v1 = {0, 1, 2, 3};
+DoubleMatrix1D matrix = new DenseDoubleMatrix1D(v1);
+// 0 1 2 3 
+
+// view all cells for which holds: lower <= value <= upper
+final double lower = 0.2;
+final double upper = 2.5
+matrix.viewSelection(F.isBetween(lower, upper)); 
+// --> 1 2
+
+// equivalent, but less concise:
+matrix.viewSelection( 
+	new DoubleProcedure() {
+		public final boolean apply(double a) { return lower &lt;= a &amp;&amp; a &lt;= upper; }
+	}
+);
+// --> 1 2
+</pre>
+<pre></pre>
+<pre>// view all cells with even value
+matrix.viewSelection( 
+	new DoubleProcedure() {
+		public final boolean apply(double a) { return a % 2 == 0; }
+	}
+);
+// --> 0 2
+
+// sum of all cells for which holds: lower <= value <= upper
+double sum = matrix.viewSelection(F.isBetween(lower, upper)).zSum(); 
+// --> 3
+<br>// equivalent: 
+double sum = matrix.viewSelection(F.isBetween(lower, upper)).aggregate(F.plus,F.identity); 
+
+</pre>
+<h4><i>Conditions on 2-d matrices</i> </h4>
+<pre>
+// view all rows which have a value < threshold in the first column (representing "age")
+final double threshold = 16;
+matrix.viewSelection( 
+	new DoubleMatrix1DProcedure() {
+		public final boolean apply(DoubleMatrix1D m) { return m.get(0) < threshold; }
+	}
+);
+
+// view all rows with RMS < threshold.<br>// the RMS (Root-Mean-Square) is a measure of the average "size" of the elements of a data sequence.
+final double threshold = 0.5;
+matrix.viewSelection( 
+	new DoubleMatrix1DProcedure() {
+		public final boolean apply(DoubleMatrix1D m) { return Math.sqrt(m.aggregate(F.plus,F.square) / m.size()) < threshold; }
+	}
+);
+</pre>
+<h4><i>Conditions on 3-d matrices</i></h4>
+<pre>
+// view all slices which have an aggregate sum > 1000
+matrix.viewSelection( 
+	new DoubleMatrix2DProcedure() {
+		public final boolean apply(DoubleMatrix2D m) { return m.zSum() > 1000; }
+	}
+);
+</pre>
+<h2>Example 4: Sorting by user specified order </h2>
+<p>Assume, we would like to sort the rows of a 2d matrix by the the last column (representing "age"). This can be done with
+<pre>
+// sort by last column
+matrix.viewSorted(matrix.columns()-1);
+</pre>
+<p>Or assume, we would like to sort the columns of a 2d matrix by the the last row. 
+Unfortunately, there is no convenience method to directly sort by row. So we need to view columns as rows and rows as columns, then sort, then adjust our view again.
+<pre>
+// sort by last row
+int lastRow = matrix.rows()-1;
+matrix.viewDice().viewSorted(lastRow).viewDice();
+</pre>
+<p>Next, we would like to sort the rows of a 2d matrix by the aggregate sum 
+  of values in a row. A <i>comparator</i> object is used to do the job: 
+<pre>// sort by sum of values in a row
+DoubleMatrix1DComparator comp = new DoubleMatrix1DComparator() {
+	public int compare(DoubleMatrix1D a, DoubleMatrix1D b) {
+		double as = a.zSum(); double bs = b.zSum();
+		return as < bs ? -1 : as == bs ? 0 : 1;
+	}
+};
+cern.colt.matrix.algo.Sorting.quickSort(matrix,comp);
+</pre>
+<p>Further, we would like to sort the rows of a 2d matrix by the aggregate sum of 
+  logarithms in a row (which is a way to achieve sorting by <i>geometric mean</i> 
+  when viewing a row as a series of samples). A slightly more complex comparator 
+  object is needed: 
+<pre>// sort by sum of logarithms in a row
+DoubleMatrix1DComparator comp = new DoubleMatrix1DComparator() {
+	public int compare(DoubleMatrix1D a, DoubleMatrix1D b) {
+		double as = a.aggregate(cern.jet.math.Functions.plus,cern.jet.math.Functions.log); <br>		double bs = b.aggregate(cern.jet.math.Functions.plus,cern.jet.math.Functions.log);
+		return as < bs ? -1 : as == bs ? 0 : 1;
+	}
+};
+cern.colt.matrix.algo.Sorting.quickSort(matrix,comp);
+</pre>
+(This is certainly not most efficient since row sums are recomputed many times, 
+but will suffice as an example. An efficient app will precompute the sums and 
+use <tt>cern.colt.GenericSorting</tt> to sort the matrix. In general, if comparisons 
+are expensive precomputation is often a good idea.) 
+</BODY>
+</HTML>

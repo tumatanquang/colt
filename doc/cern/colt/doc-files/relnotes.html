@@ -1,0 +1,222 @@
+<html>
+<HEAD>
+<TITLE>Release Notes</TITLE>
+<LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+</HEAD>
+<body>
+<h1>Release Notes</h1>
+<p>The most recent version of this document can be found at the <font size="3"><a href="http://nicewww.cern.ch/%7Ehoschek/colt/index.htm">Colt 
+  Homepage. </a>Also see the list of </font><font size="3"><a href="http://nicewww.cern.ch/%7Ehoschek/colt/index.htm"> 
+  </a></font><a href="problems.html">Known Problems</a></p>
+<p></p>
+<h2>Colt 1.0.1</h2>
+<h3>New Features</h3>
+<h3></h3>
+<ul>
+  <li>New blocked algorithm improved performance of out-of-cache matrix-matrix 
+    and matrix-vector mult (Blas.dgemm and dgemv).</li>
+  <li>Added parallel implementations of assign(function) to the BLAS (Basic Linear 
+    Algebra System). See <tt>cern.colt.matrix.linalg</tt>.</li>
+</ul>
+<h3>Bug fixes</h3>
+<ul>
+  <li>Fixed a bad bug in GenericPermuting. This one caused incorrect results to 
+    LU solving.</li>
+  <li>SmpBlas.dgemm and dgemv threw exceptions when asking for transpositions.</li>
+</ul>
+<h3>Changes</h3>
+<ul>
+  <li>None. </li>
+  </ul>
+<hr>
+<h2>Colt 1.0.0</h2>
+<p>The major new feature of this release are</p>
+<ul>
+  <li>Powerful, extendible and performant histogram abstractions, improving ways 
+    for the statistical study of experimental data. </li>
+  <li>Matrix functionality and performance improvements</li>
+</ul>
+<h3>New Features</h3>
+<h3></h3>
+<ul>
+  <li>Sequential and parallel implementations of the BLAS (Basic Linear Algebra 
+    System). See <tt>cern.colt.matrix.linalg</tt>.</li>
+  <li>Sparse row compressed matrix implementation - <tt>RCDoubleMatrix2D</tt></li>
+  <li>Major performance improvements for many matrix operations, in particular 
+    optimizations detecting function objects for scaling (+,-,*,/, ...), delegating 
+    to optimized internal implementations</li>
+  <li>For performance added generalized matrix-matrix and matrix-vector mult: 
+    <tt>C = alpha*A*B + beta*C </tt>and <tt>z = alpha*A*y + beta*z</tt> with or 
+    without transpositions</li>
+  <li>Added the long awaited histogram packages <tt>hep.aida </tt>, <tt>hep.aida.ref</tt> 
+    and <tt>hep.aida.bin</tt>. The stable bins formerly found in cern.jet.histo 
+    have been moved to hep.aida.bin and cern.jet.histo has been dropped. </li>
+  <li>Added histogram and OLAP cube operators to <tt>cern.colt.matrix.doublealgo.Statistic</tt>.</li>
+  <li>Added sampling views to cern.colt.matrix.doublealgo.Statistic </li>
+  <li>Efficient matrix quicksort using precomputation; added to <tt>cern.colt.matrix.doublealgo.Sorting</tt></li>
+  <li>Stencil methods for finite difference operations in <tt>cern.colt.matrix.doublealgo.Stencil</tt></li>
+</ul>
+<h3>Bug fixes</h3>
+<ul>
+  <li>DoubleMatrix1D.getNonZeros(IntArrayList indexList, DoubleArrayList valueList, 
+    int maxCardinality) had a bug, hence Algebra.inverse sometimes produced wrong 
+    answers. </li>
+  <li>QRDecomposition</li>
+  <li>matrix.viewStrides() sometimes gave wrong shape</li>
+  <li>matrix.zMult(...) sometimes threw ArrayIndexOutOfBoundsExceptions</li>
+  <li>DynamicBin1D.max() sometimes gave wrong answer -infinity</li>
+</ul>
+<h3>Changes</h3>
+<ul>
+  <li>Distance matrix in cern.colt.matrix.doublealgo.Statistic now works on user 
+    defined distance functions</li>
+  <li>Moved cern.colt.matrix.DoubleTransform to cern.colt.matrix.doublealgo.Transform 
+    (sorry) </li>
+</ul>
+<hr>
+<h2></h2>
+<h2>Colt 1.0 Beta 4-1</h2>
+<p>This is a minor bug fix release concerned with improving the build process.</p>
+<h3>Changes </h3>
+<ul>
+  <li>Improved build process. The makefile is now truly cross-platform (unless 
+    you prove us wrong).</li>
+  <li>Renamed to lower case: EDU.oswego.cs.dl.util.concurrent --> edu.oswego.cs.dl.util.concurrent (resolves collisions of multiple edu packages)</li>
+</ul>
+<hr>
+<h2>Colt 1.0 Beta 4</h2>
+<p>This release is mainly focussed on matrices, linear algebra and parallel programming.</p>
+<h3>Bug fixes</h3>
+<ul>
+  <li>cern.colt.matrix.linalg.Algebra.trace() now returns a double.</li>
+</ul>
+<h3>Changes </h3>
+<ul>
+  <li>Improved build process (makefile)</li>
+  <li>package cern.colt.matrix - bug fixes and performance improvements</li>
+  <li>Stronger separation of matrix interfaces and matrix implementations: 
+    <ul>
+      <li>the implementations of matrix data structures moved from package cern.colt.matrix 
+        to package cern.colt.matrix.imp</li>
+      <li>matrix factories moved from cern.colt.matrix.algo to cern.colt.matrix</li>
+    </ul>
+  </li>
+  <li>Formatter objects - Matrix formatting much extended and now also possible 
+    using java.lang.Double.toString(double)</li>
+  <li>Moved cern.jet.math.Unit and cern.jet.math.PhysicalConstants to cern.clhep 
+  </li>
+  <li>Uniform.nextDouble() now returns a value between min and max, as specified 
+    upon instance construction</li>
+</ul>
+<h3>New Features </h3>
+<h3></h3>
+<ul>
+  <li> package cern.colt.matrix.linalg - Linear Algebra </li>
+  <li>Additional convenience methods in matrix factories</li>
+  <li>cern.colt.matrix.DoubleTransform: Additional convenience methods for element-by-element 
+    transformations</li>
+  <li>Introduced Object matrices</li>
+  <li>A few additional methods in DynamicBin1D related to sampling, bootstrapping, 
+    correlation</li>
+  <li>Performance log of compute intensive matrix computations</li>
+  <li>Now also redistributing <tt>util.concurrent</tt> framework - Standardized, 
+    efficient utility classes commonly encountered in concurrent programming</li>
+  <li>package cern.clhep - Starting to port CLHEP (C++)</li>
+</ul>
+<hr>
+<h2>Colt 1.0 Beta 3</h2>
+<h3>Changes</h3>
+<p>A big package reorganization was necessary to allow for future growth. We decided 
+  to do it better sooner than later.</p>
+<ul>
+  <li>packages ch.cern.* are now named cern.*</li>
+  <li>Packages that were named in plural are now named in singular (i.e. ch.cern.colt.lists 
+    --&gt; cern.colt.list)</li>
+</ul>
+<h3>New features </h3>
+<p>There are many new features in this version, however the most significant are 
+  the addition of
+<ul>
+  <li>package cern.colt.map - Templated Hash Maps</li>
+  <li>package cern.colt.matrix - Dense and sparse multi-dimensional matrices (arrays) 
+  </li>
+  <li>package cern.colt.matrix.doublealgo - Algorithms on mult-dimensional matrices 
+  </li>
+  <li>packages cern.jet.* - Math, Statistics, Data Analysis, Histogramming, Random 
+    Numbers and Distributions</li>
+  <li>package corejava - C-like print formatting </li>
+  <li>package com.imsl.math - Math </li>
+  <li>Improved and automated build process</li>
+</ul>
+<hr>
+<h2></h2>
+<h2>Colt 1.0 Beta 2</h2>
+
+<h3>Bug fixes</h3>
+<ul>
+  <li>Minor fixes in <tt>ch.cern.colt.lists</tt>.</li>
+  <li>Minor fixes in <tt>ch.cern.colt.bitvector.BitVector</tt>.</li>
+</ul>
+<p><tt>Added ch.cern.it.hepdobms.kernel.HepPersistentObject</tt></p>
+<ul>
+  <li> Now this is the root class for all persistent capable (serializable) classes. 
+    Allows to introduce and change shared behaviour with minimum effort.</li>
+</ul>
+<p><tt>package ch.cern.colt.lists</tt></p>
+<ul>
+  <li>Introduced more flexibility: Added abstract superclasses <tt>AbstractXXXList 
+    </tt>to allow different implementations of lists. Signatures and semantics 
+    of classes and methods of V1.0 Beta 1 are still the same.</li>
+  <li>Added <tt>XXXArrayList.quickGet(...)</tt> and <tt>quickSet(...,...)</tt>. 
+    These are unsafe non bounds checking getters and setters. 3-5 times faster 
+    than safe versions.</li>
+  <li>Added<tt> DistinctNumberList</tt> and <tt>MinMaxNumberList</tt>.</li>
+</ul>
+<p><tt>Added package ch.cern.colt.lists.adapters</tt></p>
+<ul>
+  <li>Makes Colt lists compatible with the JDK 1.2 Collections Framework. Specifically, 
+    added <tt>ObjectListAdapter</tt>, <tt>IntListAdapter</tt>, <tt>LongListAdapter</tt>, 
+    <tt>FloatListAdapter</tt>, <tt>DoubleListAdapter</tt>.</li>
+</ul>
+<p><tt>package ch.cern.colt.bitvectors</tt></p>
+<ul>
+  <li>Removed <tt>QuickBitVector.get(BitVector bitVector, ...).</tt></li>
+  <li>Removed <tt>QuickBitVector.set(BitVector bitVector, ...).</tt></li>
+  <li>Instead added<tt> BitVector.quickGet(...)</tt> and <tt>quickSet(...,...)</tt>. 
+    These are unsafe non bounds checking getters and setters.</li>
+  <li>Removed <tt>QuickBitMatrix</tt>.</li>
+  <li>Instead added <tt>BitMatrix.quickGet(...)</tt> and <tt>quickSet(...,...)</tt>. 
+    These are unsafe non bounds checking getters and setters.</li>
+  <li>Major performance improvements for all methods replacing or extracting parts 
+    of bitvectors and bitmatrices. This is now lightning fast</li>
+  <li>Minor bug fixes.</li>
+</ul>
+<p><tt>package ch.cern.it.util.random</tt> </p>
+<ul>
+  <li> <tt>Random</tt> 
+    <ul>
+      <li>Renamed <tt>gaussian()</tt> and <tt>powLaw()</tt> to <tt>nextGaussian()</tt> 
+        and <tt>nextPowLaw()</tt>, respectively.</li>
+    </ul>
+  </li>
+  <li> Added <tt>MersenneTwister</tt>, one of the strongest pseudo-random number 
+    generators known so far. It is not only strong but also quick. </li>
+</ul>
+<p><tt>package edu.cornell.lassp.houle.RngPack</tt></p>
+<ul>
+  <li> <tt>RandomElement</tt> 
+    <ul>
+      <li>Fixed bug in <tt>choose(...)</tt> and <tt>choose(..., ...)</tt>. (These 
+        bugs have been known for a long time. <tt>ch.cern.it.util.random.Random</tt> 
+        was never affected. It has always worked around them). </li>
+      <li><tt>gaussian()</tt> is now faster.</li>
+      <li>Added <tt>clone()</tt> to ease maintainance of random generators producing 
+        exactly the same sequence.</li>
+    </ul>
+  </li>
+  <li><tt>Ranecu, Ranmar and Ranlux </tt>are now a bit faster.</li>
+  <li>Fixed some javadoc.</li>
+</ul>
+<hr>
+</body>
+</html>

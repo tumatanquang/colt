@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.08 [en] (WinNT; U) [Netscape]">
+   <TITLE>JAX Frequently Asked Questions (March 2, 1999)</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#0000EE">
+
+<H1>
+<IMG SRC="fr_img_alpha.gif" ></H1>
+
+<H1>
+<FONT COLOR="#000000">Migrating from JAX V5.x to V6.0</FONT></H1>
+
+<HR WIDTH="100%">
+<BR>In JAX 6.0, a <U>single configuration file</U> (*.jax file) is used
+to determine how JAX should extract your application. In contrast, earlier
+versions of JAX used up to 4 separate configuration files. JAX 6.0 is <U>not
+downward compatible</U> with earlier versions of JAX, and <U>users of earlier
+versions of JAX need to migrate their configuration files</U>.&nbsp; How
+to do this migration is discussed below.&nbsp; To learn about additional
+configuration file features, the reader is encouraged to look at the <A HREF="configTutorial.html">JAX
+Command Line Interface Tutorial.</A>
+<P>
+<HR WIDTH="100%">
+<OL>
+<LI>
+<B><I><FONT COLOR="#200B28"><A HREF="#dcl">Migrating *.dlc file entries</A></FONT></I></B></LI>
+
+<LI>
+<B><I><FONT COLOR="#200B28"><A HREF="#dim">Migrating *.dim file entries</A></FONT></I></B></LI>
+
+<LI>
+<B><I><FONT COLOR="#200B28"><A HREF="#daf">Migrating *.daf file entries</A></FONT></I></B></LI>
+
+<LI>
+<B><I><FONT COLOR="#200B28"><A HREF="#inc">Migrating *.inc file entries</A></FONT></I></B></LI>
+</OL>
+
+<HR WIDTH="100%">
+<H3>
+<A NAME="dcl"></A>Migrating *.dlc file entries</H3>
+In versions of JAX earlier than 6.0, a *.dlc file identifies a set of classes
+that are dynamically loaded (or otherwise accessed using reflection).&nbsp;
+Each class in a *.dlc file is identified by its fully qualified name, and
+should be listed in a JAX 6.0 configuration file using a <B><TT><FONT COLOR="#3333FF">#PRESERVETYPE</FONT></TT></B>
+constraint.&nbsp; For example, if class <B><TT><FONT COLOR="#3333FF">A.B.C</FONT></TT></B>
+occurs in your *.dlc file, then the constraint <B><TT><FONT COLOR="#3333FF">#PRESERVETYPE
+A.B.C</FONT></TT></B> should be added to the configuration file.
+<BR>&nbsp;
+<H3>
+<A NAME="dim"></A>Migrating *.dim file entries</H3>
+In versions of JAX earlier than 6.0, a *.dim file identifies a set of methods
+that may be dynamically invoked (or otherwise accessed using reflection).&nbsp;
+Each method in a *.dim file&nbsp; is identified by its fully qualified
+name, its arguments, and its return type.&nbsp; In *.dim files, a method's
+return type and argument types are specified in the Java Virtual Machine
+internal representation (for example, and <B><TT><FONT COLOR="#3333FF">int</FONT></TT></B>
+is presented as <B><TT><FONT COLOR="#3333FF">I</FONT></TT></B>, and a <B><TT><FONT COLOR="#3333FF">String</FONT></TT></B>
+as <B><TT><FONT COLOR="#3333FF">L/java/lang/String;</FONT></TT></B>).
+<P>Each method that occurs in a *.dim file should be listed in a JAX 6.0
+configuration file using the <B><TT><FONT COLOR="#3333FF">#PRESERVEMETHOD</FONT></TT></B>
+constraint. Since the usage of&nbsp; internal representation of types was
+confusing many of our users, we are adopted the standard Java source names
+of types in JAX 6.0 configuration files.
+<P>For example, if
+<BR><FONT COLOR="#3333FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<B><TT>A.B.C F(ILmy/Object;II)Z</TT></B></FONT>
+<BR>occurs in your *.dim file, then the constraint
+<BR><FONT COLOR="#3333FF"><FONT SIZE=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</FONT><B><TT>#PRESERVEMETHOD A.B.C.F(int,my.Object,int,int)</TT></B></FONT>
+<BR>should be added to your configuration file.
+<P>Note that the representation of a method in a configuration file differs
+from its representation in a *.dim file in the following ways:
+<UL>
+<LI>
+a dot replaces the space between the class name and the method name,</LI>
+
+<LI>
+arguments are specified as they would appear in Java source code,</LI>
+
+<LI>
+commas separate arguments,</LI>
+
+<LI>
+package names for arguments are separated by dots, and</LI>
+
+<LI>
+no return type is specified.</LI>
+</UL>
+
+<H3>
+<A NAME="daf"></A>Migrating *.daf file entries</H3>
+In pre-6.0 versions of JAX, a *.daf file is used to identify a set of fields
+that are accessed using reflection. Each field in a *.daf file is identified
+by its fully qualified name, and its type.&nbsp; The return type, like
+the return type of a method in a *.dim file,&nbsp; is specified in the
+Java Virtual Machine internal representation.
+<P>In a JAX 6.0 configuration file, fields that are accessed using reflection
+are represented using the&nbsp; <B><TT><FONT COLOR="#3333FF">#PRESERVEFIELD</FONT></TT></B>
+constraint, and standard Java-source notation is used for representing
+the field's type.
+<P>For example, if
+<BR><FONT COLOR="#3333FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<B><TT>A.B.C offset Z</TT></B></FONT>
+<BR>is an entry in the *.daf file, then the constraint
+<BR><FONT COLOR="#3333FF"><FONT SIZE=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</FONT><B><TT>#PRESERVEFIELD A.B.C.offset</TT></B></FONT>
+<BR>should be added to the configuration file.
+<P>Note that the representation of a field in a configuration file differs
+from its representation in a *.daf file in the following ways:
+<BLOCKQUOTE>
+<LI>
+a dot replaces the space between the class name and field name, and</LI>
+
+<LI>
+no return type is specified.</LI>
+</BLOCKQUOTE>
+
+<H3>
+<A NAME="inc"></A>Migrating *.inc file entries</H3>
+In earlier versions of JAX, an *.inc file was used to determine which classes
+should be processed by JAX, and which classes should be treated as "external"
+to the application. The *.inc file contains a list of package prefixes
+or class names preceded by either the <FONT COLOR="#3333FF"><B><TT>INCLUDE</TT></B><FONT SIZE=-1>
+</FONT></FONT>or
+the <FONT COLOR="#3333FF"><B><TT>EXCLUDE</TT></B><FONT SIZE=-1> </FONT></FONT>keyword.
+<P>In JAX 6.0, the <B><TT><FONT COLOR="#3333FF">#INCLUDECLASS</FONT></TT></B>
+and <B><TT><FONT COLOR="#3333FF">#INCLUDEPACKAGE
+</FONT></TT></B>directives
+allow one to specify which classes should be processed by JAX. Note that
+<U>there
+is no `exclude' directive</U>: any class not covered by an <B><TT><FONT COLOR="#3333FF">#INCLUDECLASS</FONT></TT></B>
+or <B><TT><FONT COLOR="#3333FF">#INCLUDEPACKAGE </FONT></TT></B>directive
+is considered "excluded".
+<P>In order to migrate your *.inc file,&nbsp; each <B><TT><FONT COLOR="#3333FF">INCLUDE</FONT></TT></B>
+entry should be represented in a configuration file as either an <B><TT><FONT COLOR="#3333FF">#INCLUDECLASS</FONT></TT></B>
+or an <FONT COLOR="#3333FF"><B><TT>#INCLUDEPACKAGE</TT></B><FONT SIZE=-1>
+</FONT></FONT>directive.&nbsp;
+If a class name is specified after the <B><TT><FONT COLOR="#3333FF">INCLUDE</FONT></TT></B>
+entry in the *.inc file, an <FONT COLOR="#3333FF"><B><TT>#INCLUDECLASS</TT></B><FONT SIZE=-1>
+</FONT></FONT>directive
+should be added to the configuration file; otherwise, an <B><TT><FONT COLOR="#3333FF">#INCLUDEPACKAGE</FONT></TT></B>
+directive should be used.
+<P>For example, if <FONT COLOR="#3333FF"><B><TT>INCLUDE Hanoi</TT></B><FONT SIZE=-1>
+</FONT></FONT>is an entry in an *.inc file and Hanoi is the name of a class,
+then the entry
+<B><TT><FONT COLOR="#3333FF">#INCLUDECLASS Hanoi </FONT></TT></B>should
+be added to the configuration file. Moreover, if <FONT COLOR="#3333FF"><B><TT>INCLUDE
+ltk</TT></B> </FONT>is an entry in an *.inc file and ltk is a package prefix,
+then the entry&nbsp;<FONT COLOR="#3333FF"><FONT SIZE=-1> </FONT><B><TT>#INCLUDEPACKAGE
+ltk</TT></B><FONT SIZE=-1>
+</FONT></FONT>should be added to the configuration
+file.
+<P>
+<HR>Copyright IBM 1997-1999. All Rights Reserved.
+<BR><A HREF="http://www.alphaWorks.ibm.com/formula/jax">More Information</A>
+<BR>
+<HR>
+</BODY>
+</HTML>
