@@ -1,0 +1,7 @@
+## Welcome to the Colt Project
+
+Welcome to the Colt Project. Colt provides a set of Open Source Libraries for High Performance Scientific and Technical Computing in Java.
+
+Scientific and technical computing, as, for example, carried out at CERN, is characterized by demanding problem sizes and a need for high performance at reasonably small memory footprint. There is a perception by many that the Java language is unsuited for such work. However, recent trends in its evolution suggest that it may soon be a major player in performance sensitive scientific and technical computing. For example, IBM Watson's [Ninja project](http://www.research.ibm.com/ninja/) showed that Java can indeed perform BLAS matrix computations up to 90% as fast as optimized Fortran. The [Java Grande Forum Numerics Working Group](http://math.nist.gov/javanumerics/) provides a focal point for information on numerical computing in Java. With the performance gap steadily closing, Java has recently found increased adoption in the field. The reasons include ease of use, cross-platform nature, built-in support for multi-threading, network friendly APIs and a healthy pool of available developers. Still, these efforts are to a significant degree hindered by the lack of foundation toolkits broadly available and conveniently accessible in C and Fortran.
+
+The latest stable Colt release breaks the [1.9 Gflop/s barrier](https://dst.lbl.gov/ACSSoftware/colt/ibm-1.4.1-2xpentium4-2.8GHz.txt) on JDK ibm-1.4.1, RedHat 9.0, 2x IntelXeon@2.8 GHz.
