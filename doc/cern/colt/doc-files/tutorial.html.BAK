@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.08 [en] (WinNT; U) [Netscape]">
+   <TITLE>JAX Tutorial (March 2, 1999)</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#0000EE">
+
+<H1>
+<IMG SRC="fr_img_alpha.gif" HEIGHT=40 WIDTH=40></H1>
+
+<H1>
+<FONT COLOR="#000000">JAX Tutorial</FONT></H1>
+
+<HR WIDTH="100%">
+<BR>JAX is a Java program packaging tool that reduces the program's size.
+It works by analyzing a Java program, extracting the essential artifacts
+out of it, applying some optimizations that reduce space overhead, and
+then compressing what is left. An estimated 30-90% reduction of the original
+program size is currently feasible with JAX. In addition, a JAXed Java
+program is also obfuscated. Obfuscation makes the reconstruction of source
+code from byte codes difficult.
+<P>There are two ways to Jax a Java program. JAX can be run as a command-line
+(batch) tool. We also provide an experimental Graphical User Interface
+(GUI) . Please note that the <B>GUI is supported only for JDK1.1.7 or earlier
+JDK releases.</B>
+<BR>We will explain the both in detail.
+<UL>
+<LI>
+<A HREF="configTutorial.html">JAX-ing a Java program using the command-line
+interface</A></LI>
+
+<LI>
+<A HREF="gui.html">JAX-ing a Java program using the GUI (JDK 1.1.x only!)</A></LI>
+</UL>
+
+<P><BR>
+<HR>
+<BR>Copyright IBM 1997-1999. All Rights Reserved.
+<BR><A HREF="http://www.alphaWorks.ibm.com/formula/jax">More Information</A>
+<BR>
+<HR WIDTH="100%">
+</BODY>
+</HTML>

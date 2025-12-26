@@ -1,0 +1,25 @@
+<html>
+<HEAD>
+<TITLE>Known problems</TITLE>
+<LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+</HEAD>
+<body>
+<h2>Known problems</h2>
+<p> <FONT COLOR="#000000">Please also check the <font size="3"><nobr><a href="mailing.html">Colt 
+  Mailing List</a></nobr>.<br>
+  </font></FONT><FONT COLOR="#000000">Colt is not perfect...yet. Here is a short 
+  list of the problems we are aware of. </FONT></p>
+<UL>
+  <LI> <FONT COLOR="#000000">No problems so far</FONT></LI>
+</UL>
+<p><font color="#000000">Please continue to report any problems by e-mail to <a href="mailto:wolfgang.hoschek@cern.ch">wolfgang.hoschek@cern.ch</a>. 
+  </font>I<font color="#000000">ndicate the full Colt version (output of <tt>java 
+  cern.colt.Version</tt>), Operating System, VM, Compiler, and a short description 
+  of the bug. As usual, a small snippet that reproduces the problem is 10 times 
+  more likely to be fixed than anything else.</font> </p>
+<blockquote>
+<p>&nbsp; </p>
+</blockquote>
+<HR WIDTH="100%">
+<p>&nbsp;</p></BODY>
+</HTML>

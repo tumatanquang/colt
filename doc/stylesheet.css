@@ -1,0 +1,51 @@
+/* Javadoc style sheet */
+
+/* Define colors, fonts and other style attributes here to override the defaults  */
+
+/* Page background color */
+/* body { background-color: #FFFFFF } */
+body { background-color: #FFFFCC } /* Yellow */
+
+/* Table colors */
+.TableHeadingColor     { background: #CCCCFF } /* Dark mauve */
+.TableSubHeadingColor  { background: #EEEEFF } /* Light mauve */
+.TableRowColor         { background: #FFFFCC } /* Yellow */
+/*.TableRowColor         { background: #FFFFFF } */ /* White */
+
+/* Font used in left-hand frame lists */
+.FrameTitleFont   { font-size: normal; font-family: normal }
+.FrameHeadingFont { font-size: normal; font-family: normal }
+.FrameItemFont    { font-size: normal; font-family: normal }
+
+/* Example of smaller, sans-serif font in frames */
+/* .FrameItemFont  { font-size: 10pt; font-family: Helvetica, Arial, sans-serif } */
+
+/* Navigation bar fonts and colors */
+
+/*.NavBarCell1    { background-color:#EEEEFF;} */ /* Light mauve */
+/*.NavBarCell1Rev { background-color:#00008B;} */ /* Dark Blue */
+
+.NavBarCell1    { background-color:#FFFFCC;}/* Light mauve */
+.NavBarCell1Rev { background-color:#00008B;}/* Dark Blue */
+.NavBarFont1    { font-family: Arial, Helvetica, sans-serif; color:#000000;}
+.NavBarFont1Rev { font-family: Arial, Helvetica, sans-serif; color:#FFFFFF;}
+
+.NavBarCell2    { font-family: Arial, Helvetica, sans-serif; background-color:#FFFFCC;}
+.NavBarCell3    { font-family: Arial, Helvetica, sans-serif; background-color:#FFFFCC;}
+
+/*
+.NavBarFont1    { font-family: Arial, Helvetica, sans-serif; color:#000000;}
+.NavBarFont1Rev { font-family: Arial, Helvetica, sans-serif; color:#FFFFFF;}
+
+.NavBarCell2    { font-family: Arial, Helvetica, sans-serif; background-color:#FFFFFF;}
+.NavBarCell3    { font-family: Arial, Helvetica, sans-serif; background-color:#FFFFFF;}
+*/
+
+/* BODY       { background: white; color: black} */
+TD.PRE     { background: #FFFF88; color: black; white-space: pre}
+TD.LISTING { background: #88FFFF; color: black; white-space: pre}
+TD.LPROUT  { background: #FFBBFF; color: black; white-space: pre}
+CODE       { color: blue }
+TT         { color: blue } 
+/* TT         { color: #990066 } */ /* dark purple */
+/* TT         { color: #800080 } */ /* dark brown */
