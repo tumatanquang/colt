@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                             "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>README</title>
+</head>
+
+<body>
+<!-- ##################################################################################### -->
+<table border="0" cellspacing="0" cellpadding="2" width="100%">	
+		<tr><td bgcolor="#525d76"> <font color="#ffffff" face="arial,helvetica,sanserif">
+		<strong>Quick File Overview</strong>
+		</font></td></tr>
+</table>
+
+<blockquote>
+
+<pre>
+doc/readme.html               - this file
+doc/changelog.html            - lists recent changes to the source code (release notes)
+doc/license.html              - the license defining the terms of use of the software
+</pre>
+
+The project website is a copy of the <code> doc/ </code> directory.
+</blockquote>
+
+
+<!-- ##################################################################################### -->
+<table border="0" cellspacing="0" cellpadding="2" width="100%">	
+		<tr><td bgcolor="#525d76"> <font color="#ffffff" face="arial,helvetica,sanserif">
+		<strong>Directories necessary for users of a binary distribution</strong>
+		</font></td></tr>
+</table>
+
+<blockquote>
+
+<pre>
+doc/                          - guides, tutorials, FAQ, etc.
+doc/api/                      - generated javadoc HTML documentation
+lib/                          - jar files for client usage
+
+</pre>
+
+</blockquote>
+
+                               
+
+<!-- ##################################################################################### -->
+<table border="0" cellspacing="0" cellpadding="2" width="100%">	
+		<tr><td bgcolor="#525d76"> <font color="#ffffff" face="arial,helvetica,sanserif">
+		<strong>Directories necessary for developers</strong>
+		</font></td></tr>
+</table>
+
+<blockquote>
+
+<pre>
+src/                          - java source code
+build.xml                     - ant build file to build the entire thing from scratch.
+                                The build file contains build instructions
+build/classes/                - temporary dir for compilation upon build (so that .class files are separate from .java files)
+</pre>
+
+</blockquote>
+
+
+
+<!-- ##################################################################################### -->
+<table border="0" cellspacing="0" cellpadding="2" width="100%">	
+		<tr><td bgcolor="#525d76"> <font color="#ffffff" face="arial,helvetica,sanserif">
+		<strong>Building from source</strong>
+		</font></td></tr>
+</table>
+
+<blockquote>
+
+Most users will not need to build from source as a binary distribution of all
+libraries is included in the download.
+If you are a developer, then see the
+build, tarball, etc. instructions in the ant build file <code>build.xml</code>.  
+<p>
+Build Requirements:
+
+<pre>
+	jdk-1.2 or higher ('java' must be in your PATH)
+	ant-1.5.3 or higher (http://jakarta.apache.org/ant)
+</pre>
+
+Define the path to your java installation and ant software. For example
+
+<pre>
+	UNIX bash-style: 
+		export PATH=/usr/local/java2/jdk/jdk-1.4/bin:$PATH
+	
+		export PATH=/usr/local/java2/share/apache/ant/bin:$PATH
+		export JAVA_HOME=/usr/local/java2/jdk/jdk-1.4    (ant works without this but reports a warning)
+		
+	Windows:
+		set PATH=e:\java\jdk\sun-1.4.2\bin;%PATH%
+	
+		set PATH=e:\java\share\apache\ant-1.5.4\bin;%PATH%
+		set JAVA_HOME=e:\java\jdk\sun-1.4.2              (ant works without this but reports a warning)
+</pre>
+
+
+To build everything from scratch, type
+
+<pre>
+	cd colt
+	ant build
+</pre>  
+
+To get more information on other targets, type
+<pre>
+	ant usage
+</pre>
+	
+
+</blockquote>
+
+
+
+
+<!-- ##################################################################################### -->
+<table border="0" cellspacing="0" cellpadding="2" width="100%">	
+		<tr><td bgcolor="#525d76"> <font color="#ffffff" face="arial,helvetica,sanserif">
+		<strong>Feedback</strong>
+		</font></td></tr>
+</table>
+
+<blockquote>
+
+Comments are always welcome at <code>whoschek@lbl.gov</code>.
+
+</blockquote>
+
+<!-- ##################################################################################### -->
+<!-- FOOTER -->
+<hr noshade="noshade" size="1">
+
+</body>
+</html>

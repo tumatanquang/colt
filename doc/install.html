@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                             "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Installation</title>
+</head>
+
+<!-- ##################################################################################### -->
+<table border="0" cellspacing="0" cellpadding="2" width="100%">	
+		<tr><td bgcolor="#525d76"> <font color="#ffffff" face="arial,helvetica,sanserif">
+		<strong>Supported Platforms</strong>
+		</font></td></tr>
+</table>
+
+<blockquote>
+Colt should happily run on any Unix and any Windows with java-1.2.x or higher.
+Currently, we know it runs at least on Linux, Solaris, MacOSX and Windows 2000 or higher.
+</blockquote>
+
+
+
+<!-- ##################################################################################### -->
+<table border="0" cellspacing="0" cellpadding="2" width="100%">	
+		<tr><td bgcolor="#525d76"> <font color="#ffffff" face="arial,helvetica,sanserif">
+		<strong>Installation Instructions</strong>
+		</font></td></tr>
+</table>
+
+<blockquote>
+
+Releases can be installed via a tar.gz file (Unix) or zip file (Windows).
+<p>
+1. Download <code>colt-{version}.(tar.gz, zip)</code> from <a target="_top" href="http://dsd.lbl.gov/~hoschek/colt-download">here</a>
+<p>
+<blockquote>
+Due too an obscure bug, Winzip and possibly other Windows decompression tools 
+may miss empty directories. 
+Consequently, use the .zip download file on Windows, and DO NOT decompress tar[.gz] files on Windows.
+</blockquote>
+<p>
+2. Decompress the file into any convenient directory (the software is relocatable)
+
+<blockquote>	
+	In the examples below we assume as installation directory
+	
+	<pre>
+	/opt/colt       (Unix)
+	c:\colt         (Windows)
+	</pre>
+	
+	If you choose to install into an alternative location  (e.g. <code>/usr/local, $HOME, d:\apps</code>)
+	then substitute the paths used in examples on this website accordingly.
+
+	<pre>
+	cd /opt	 
+	tar -zxvf colt-{version}.tar.gz   (Unix)
+	Winzip colt-{version}.zip         (Windows)
+	</pre>
+	
+	This will create the directory tree <code>/opt/colt/</code> (Unix) or <code>c:\colt</code> (Windows).
+	<p>
+	NOTE: Because of a bug in Solaris tar, Solaris users should use <a target="_top" href="http://www.mysql.com/downloads/os-solaris.html">gnu tar</a> to unpack archives.
+</blockquote>	
+
+<p>
+3. You are finished with the installation.
+<p>
+4. If you ever want to uninstall the software, type
+
+	<pre>
+	rm -fr /opt/colt     (Unix)
+	rmdir c:\colt /s/q   (Windows)
+	</pre>
+
+<p>
+5. Add colt.jar and concurrent.jar to your CLASSPATH.
+
+	<pre>
+	export CLASSPATH=/opt/colt/lib/colt.jar:/opt/colt/lib/concurrent.jar:$CLASSPATH  (on Unix bash style)
+	set CLASSPATH=c:\colt\lib\colt.jar;c:\colt\lib\concurrent.jar;%CLASSPATH%        (on Windows)
+	</pre>
+
+<p>
+</blockquote>
+
+
+<!-- ##################################################################################### -->
+<!-- FOOTER -->
+<hr noshade="noshade" size="1">
+
+</body>
+</html>
